@@ -1,3 +1,5 @@
+import { jsPDF } from "jspdf";
+
 export function gerarPDF(orcamentos) {
   try {
     const doc = new jsPDF();
@@ -26,6 +28,12 @@ export function gerarPDF(orcamentos) {
       );
 
       y += 50 + orcamento.servicos.length * 10;
+
+      // Evita ultrapassar a página
+      if (y > 270) {
+        doc.addPage();
+        y = 20;
+      }
     });
 
     doc.save("orcamento_big_refrigeracao.pdf");
